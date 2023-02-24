@@ -5,11 +5,12 @@
 //  Created by Alvin He on 23/2/2023.
 //
 
+import AsyncDataLoader
 import UIKit
 
 class ViewController: UICollectionViewController {
 
-    private static var collectionViewLayout: UICollectionViewCompositionalLayout = {
+    static var collectionViewLayout: UICollectionViewCompositionalLayout = {
         let fraction: CGFloat = 1 / 3
 
         // Item
@@ -36,12 +37,16 @@ class ViewController: UICollectionViewController {
         return UICollectionViewCompositionalLayout(section: section)
     }()
 
-    convenience init() {
-        self.init(collectionViewLayout: Self.collectionViewLayout)
-        collectionView.register(
-            PhotoCell.self,
-            forCellWithReuseIdentifier: PhotoCell.reusedIdentifier
-        )
+    private let asyncDataLoader = AsyncDataLoader(severSession: URLSession.shared)
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
+        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reusedIdentifier)
     }
 
     // DataSource
@@ -59,6 +64,12 @@ class ViewController: UICollectionViewController {
                 withReuseIdentifier: PhotoCell.reusedIdentifier,
                 for: indexPath
             ) as? PhotoCell else { return UICollectionViewCell() }
+
+        cell.loadImage(
+            "https://picsum.photos/id/\(indexPath.row)/\(Int(cell.bounds.width))/\(Int(cell.bounds.height))",
+            asyncDataLoader: asyncDataLoader
+        )
+
         return cell
     }
 

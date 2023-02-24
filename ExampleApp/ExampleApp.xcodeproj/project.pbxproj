@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF49132529A88C57000BC88F /* AsyncDataLoader in Frameworks */ = {isa = PBXBuildFile; productRef = EF49132429A88C57000BC88F /* AsyncDataLoader */; };
 		EFAC4E9529A774CE00FC2D7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAC4E9429A774CE00FC2D7D /* AppDelegate.swift */; };
 		EFAC4E9929A774CE00FC2D7D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAC4E9829A774CE00FC2D7D /* ViewController.swift */; };
 		EFAC4E9E29A774CF00FC2D7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFAC4E9D29A774CF00FC2D7D /* Assets.xcassets */; };
@@ -15,13 +16,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF53D64029A88B8A001A1592 /* AsyncDataLoader */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AsyncDataLoader; path = ..; sourceTree = "<group>"; };
 		EFAC4E9129A774CE00FC2D7D /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFAC4E9429A774CE00FC2D7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EFAC4E9829A774CE00FC2D7D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EFAC4E9D29A774CF00FC2D7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EFAC4EA029A774CF00FC2D7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EFAC4EA229A774CF00FC2D7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EFAC4EA929A7751900FC2D7D /* AsyncDataLoader */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AsyncDataLoader; path = ..; sourceTree = "<group>"; };
 		EFE3176C29A86FD600A5580C /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -30,18 +31,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF49132529A88C57000BC88F /* AsyncDataLoader in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EF49132329A88C57000BC88F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EF53D63F29A88B8A001A1592 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				EF53D64029A88B8A001A1592 /* AsyncDataLoader */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		EFAC4E8829A774CE00FC2D7D = {
 			isa = PBXGroup;
 			children = (
-				EFAC4EA829A7751900FC2D7D /* Packages */,
+				EF53D63F29A88B8A001A1592 /* Packages */,
 				EFAC4E9329A774CE00FC2D7D /* ExampleApp */,
 				EFAC4E9229A774CE00FC2D7D /* Products */,
+				EF49132329A88C57000BC88F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,14 +84,6 @@
 			path = ExampleApp;
 			sourceTree = "<group>";
 		};
-		EFAC4EA829A7751900FC2D7D /* Packages */ = {
-			isa = PBXGroup;
-			children = (
-				EFAC4EA929A7751900FC2D7D /* AsyncDataLoader */,
-			);
-			name = Packages;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -90,6 +100,9 @@
 			dependencies = (
 			);
 			name = ExampleApp;
+			packageProductDependencies = (
+				EF49132429A88C57000BC88F /* AsyncDataLoader */,
+			);
 			productName = ExampleApp;
 			productReference = EFAC4E9129A774CE00FC2D7D /* ExampleApp.app */;
 			productType = "com.apple.product-type.application";
@@ -358,6 +371,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EF49132429A88C57000BC88F /* AsyncDataLoader */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AsyncDataLoader;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EFAC4E8929A774CE00FC2D7D /* Project object */;
 }

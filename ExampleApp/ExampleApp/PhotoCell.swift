@@ -5,6 +5,7 @@
 //  Created by Alvin He on 23/2/2023.
 //
 
+import AsyncDataLoader
 import UIKit
 
 protocol DismissibleCell {
@@ -27,6 +28,7 @@ class PhotoCell: UICollectionViewCell, DismissibleCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .gray
+        self.contentView.addSubview(imageView)
     }
 
     override func layoutSubviews() {
@@ -40,9 +42,14 @@ class PhotoCell: UICollectionViewCell, DismissibleCell {
         self.imageView.image = nil
     }
 
-    func loadImage(_ url: String) {
-        self.task = Task {
-
+    func loadImage(_ url: String, asyncDataLoader: AsyncDataLoaderProtocol) {
+        self.task = Task { [weak self] in
+            do {
+                let data = try await asyncDataLoader.data(from: url)
+                self?.imageView.image = UIImage(data: data)
+            } catch {
+                print(error)
+            }
         }
     }
 }

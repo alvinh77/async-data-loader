@@ -7,8 +7,7 @@
 
 import Foundation
 
-public protocol InMemoryCacheProtocol {
+public protocol CacheManagerProtocol {
     func object(forKey key: String) -> Data?
     func set(_ data: Data, forKey key: String)
 }
-

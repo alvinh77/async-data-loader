@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UICollectionViewController {
 
     private let asyncDataLoader = AsyncDataLoader(
-        inMemoryCache: InMemoryCache(cache: .init()),
+        inMemoryCacheMananger: InMemoryCacheManager(cache: .init()),
         severSession: URLSession.shared
     )
 

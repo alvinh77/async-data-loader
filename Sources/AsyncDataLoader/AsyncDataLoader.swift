@@ -13,22 +13,22 @@ public protocol AsyncDataLoaderProtocol {
 
 public struct AsyncDataLoader: AsyncDataLoaderProtocol {
 
-    private let inMemoryCache: InMemoryCacheProtocol
+    private let inMemoryCacheMananger: CacheManagerProtocol
     private let severSession: ServerSessionProtocol
 
     public init(
-        inMemoryCache: InMemoryCacheProtocol,
+        inMemoryCacheMananger: CacheManagerProtocol,
         severSession: ServerSessionProtocol
     ) {
-        self.inMemoryCache = inMemoryCache
+        self.inMemoryCacheMananger = inMemoryCacheMananger
         self.severSession = severSession
     }
 
     public func data(from url: String) async throws -> Data {
-        if let data = inMemoryCache.object(forKey: url) { return data }
+        if let data = inMemoryCacheMananger.object(forKey: url) { return data }
         guard let url = URL(string: url) else { throw DataLoaderError.invalidURL }
         let (data, _) = try await severSession.data(from: url)
-        inMemoryCache.set(data, forKey: url.absoluteString)
+        inMemoryCacheMananger.set(data, forKey: url.absoluteString)
         return data
     }
 }

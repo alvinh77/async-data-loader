@@ -9,5 +9,6 @@ import Foundation
 
 public protocol CacheManagerProtocol {
     func object(forKey key: String) -> Data?
-    func set(_ data: Data, forKey key: String)
+    func set(_ data: Data, forKey key: String) throws
+    func clearCache() throws
 }

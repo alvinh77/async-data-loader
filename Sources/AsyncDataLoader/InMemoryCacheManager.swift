@@ -19,8 +19,12 @@ public final class InMemoryCacheManager: CacheManagerProtocol {
         cache.object(forKey: .init(key: key))?.data
     }
 
-    public func set(_ data: Data, forKey key: String) {
+    public func set(_ data: Data, forKey key: String) throws {
         cache.setObject(.init(data: data), forKey: .init(key: key))
+    }
+
+    public func clearCache() {
+        cache.removeAllObjects()
     }
 }
 
@@ -32,7 +36,7 @@ extension InMemoryCacheManager {
             self.key = key
         }
 
-        public override var hash: Int { return key.hashValue }
+        public override var hash: Int { return key.hash }
 
         public override func isEqual(_ object: Any?) -> Bool {
             guard let value = object as? WrappedKey else {

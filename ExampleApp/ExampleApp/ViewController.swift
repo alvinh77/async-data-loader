@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UICollectionViewController {
 
     private let asyncDataLoader = AsyncDataLoader(
+        diskCacheManager: DiskCacheManager(fileMananger: FileManager.default),
         inMemoryCacheMananger: InMemoryCacheManager(cache: .init()),
         severSession: URLSession.shared
     )
@@ -31,7 +32,7 @@ class ViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 120
+        return 300
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

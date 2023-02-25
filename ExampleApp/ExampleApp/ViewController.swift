@@ -10,6 +10,47 @@ import UIKit
 
 class ViewController: UICollectionViewController {
 
+    private let asyncDataLoader = AsyncDataLoader(
+        inMemoryCache: InMemoryCache(cache: .init()),
+        severSession: URLSession.shared
+    )
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override init(collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(collectionViewLayout: layout)
+        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reusedIdentifier)
+    }
+
+    // DataSource
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 120
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView
+            .dequeueReusableCell(
+                withReuseIdentifier: PhotoCell.reusedIdentifier,
+                for: indexPath
+            ) as? PhotoCell else { return UICollectionViewCell() }
+
+        cell.loadImage(
+            "https://picsum.photos/id/\(indexPath.row)/\(Int(cell.bounds.width*2))/\(Int(cell.bounds.height*2))",
+            asyncDataLoader: asyncDataLoader
+        )
+
+        return cell
+    }
+}
+
+extension ViewController {
     static var collectionViewLayout: UICollectionViewCompositionalLayout = {
         let fraction: CGFloat = 1 / 3
 
@@ -36,45 +77,4 @@ class ViewController: UICollectionViewController {
         section.contentInsets = .init(top: 8, leading: 8, bottom: 8, trailing: 8)
         return UICollectionViewCompositionalLayout(section: section)
     }()
-
-    private let asyncDataLoader = AsyncDataLoader(severSession: URLSession.shared)
-
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override init(collectionViewLayout layout: UICollectionViewLayout) {
-        super.init(collectionViewLayout: layout)
-        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reusedIdentifier)
-    }
-
-    // DataSource
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1000
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView
-            .dequeueReusableCell(
-                withReuseIdentifier: PhotoCell.reusedIdentifier,
-                for: indexPath
-            ) as? PhotoCell else { return UICollectionViewCell() }
-
-        cell.loadImage(
-            "https://picsum.photos/id/\(indexPath.row)/\(Int(cell.bounds.width))/\(Int(cell.bounds.height))",
-            asyncDataLoader: asyncDataLoader
-        )
-
-        return cell
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? DismissibleCell else { return }
-        cell.dismiss()
-    }
 }

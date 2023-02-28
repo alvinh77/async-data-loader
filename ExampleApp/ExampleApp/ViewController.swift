@@ -24,6 +24,18 @@ class ViewController: UICollectionViewController {
     override init(collectionViewLayout layout: UICollectionViewLayout) {
         super.init(collectionViewLayout: layout)
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reusedIdentifier)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .trash,
+            target: self,
+            action: #selector(clearCache)
+        )
+        navigationItem.title = "AsyncDataLoader Demo"
+    }
+
+    @objc private func clearCache() {
+        Task {
+            try await asyncDataLoader.clearCache()
+        }
     }
 
     // DataSource

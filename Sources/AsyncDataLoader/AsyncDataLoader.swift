@@ -28,12 +28,14 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
     }
 
     public func data(from url: String) async throws -> Data {
-        if let data = inMemoryCacheMananger.object(forKey: url) { return data }
-        if let data = diskCacheManager.object(forKey: url) { return data }
+        if let data = await inMemoryCacheMananger.object(forKey: url) { return data }
+        if let data = await diskCacheManager.object(forKey: url) { return data }
         guard let url = URL(string: url) else { throw DataLoaderError.invalidURL }
         let (data, _) = try await severSession.data(from: url)
-        try? inMemoryCacheMananger.set(data, forKey: url.absoluteString)
-        try? diskCacheManager.set(data, forKey: url.absoluteString)
+        _ = try await (
+            inMemoryCacheMananger.set(data, forKey: url.absoluteString),
+            diskCacheManager.set(data, forKey: url.absoluteString)
+        )
         return data
     }
 }

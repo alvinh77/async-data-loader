@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class InMemoryCacheManager: CacheManagerProtocol {
+public actor InMemoryCacheManager: CacheManagerProtocol {
 
     private let cache: NSCache<WrappedKey, WrappedData>
 
@@ -29,20 +29,11 @@ public final class InMemoryCacheManager: CacheManagerProtocol {
 }
 
 extension InMemoryCacheManager {
-    public final class WrappedKey: NSObject {
+    public final class WrappedKey {
         private let key: String
 
         init(key: String) {
             self.key = key
-        }
-
-        public override var hash: Int { return key.hash }
-
-        public override func isEqual(_ object: Any?) -> Bool {
-            guard let value = object as? WrappedKey else {
-                return false
-            }
-            return value.key == key
         }
     }
 
@@ -54,3 +45,5 @@ extension InMemoryCacheManager {
         }
     }
 }
+
+extension NSCache: @unchecked Sendable {}

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol CacheManagerProtocol {
+public protocol CacheManagerProtocol: Actor {
     func object(forKey key: String) -> Data?
     func set(_ data: Data, forKey key: String) throws
     func clearCache() throws

@@ -9,18 +9,18 @@ import Foundation
 
 public actor InMemoryCacheManager: CacheManagerProtocol {
 
-    private let cache: NSCache<WrappedKey, WrappedData>
+    private let cache: NSCache<NSString, WrappedData>
 
-    public init(cache: NSCache<WrappedKey, WrappedData>) {
+    public init(cache: NSCache<NSString, WrappedData>) {
         self.cache = cache
     }
 
     public func object(forKey key: String) -> Data? {
-        cache.object(forKey: .init(key: key))?.data
+        cache.object(forKey: NSString(string: key))?.data
     }
 
     public func set(_ data: Data, forKey key: String) throws {
-        cache.setObject(.init(data: data), forKey: .init(key: key))
+        cache.setObject(.init(data: data), forKey: NSString(string: key))
     }
 
     public func clearCache() {
@@ -29,14 +29,6 @@ public actor InMemoryCacheManager: CacheManagerProtocol {
 }
 
 extension InMemoryCacheManager {
-    public final class WrappedKey {
-        private let key: String
-
-        init(key: String) {
-            self.key = key
-        }
-    }
-
     public final class WrappedData {
         fileprivate let data: Data
 

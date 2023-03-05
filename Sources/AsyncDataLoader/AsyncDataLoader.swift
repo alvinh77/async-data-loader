@@ -30,7 +30,10 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
 
     public func data(from url: String) async throws -> Data {
         if let data = await inMemoryCacheMananger.object(forKey: url) { return data }
-        if let data = await diskCacheManager.object(forKey: url) { return data }
+        if let data = await diskCacheManager.object(forKey: url) {
+            try await inMemoryCacheMananger.set(data, forKey: url)
+            return data
+        }
         guard let url = URL(string: url) else { throw DataLoaderError.invalidURL }
         let (data, response) = try await severSession.data(from: url)
         guard let statusCode = (response as? HTTPURLResponse)?.statusCode,

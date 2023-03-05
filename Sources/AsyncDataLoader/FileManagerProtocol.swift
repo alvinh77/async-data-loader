@@ -18,12 +18,6 @@ public protocol FileManagerProtocol {
     func contents(atPath: String) -> Data?
 
     func createDirectory(
-        atPath path: String,
-        withIntermediateDirectories createIntermediates: Bool,
-        attributes: [FileAttributeKey : Any]?
-    ) throws
-
-    func createDirectory(
         at url: URL,
         withIntermediateDirectories createIntermediates: Bool,
         attributes: [FileAttributeKey : Any]?

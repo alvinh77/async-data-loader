@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol FileManagerProtocol {
+public protocol FileManagerProtocol: Sendable {
     func urls(
         for directory: FileManager.SearchPathDirectory,
         in domainMask: FileManager.SearchPathDomainMask
@@ -32,4 +32,4 @@ public protocol FileManagerProtocol {
     func removeItem(at: URL) throws
 }
 
-extension FileManager: FileManagerProtocol {}
+extension FileManager: FileManagerProtocol, @unchecked Sendable {}

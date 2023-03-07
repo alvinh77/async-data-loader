@@ -8,11 +8,7 @@
 import AsyncDataLoader
 import UIKit
 
-protocol DismissibleCell {
-    func dismiss()
-}
-
-class PhotoCell: UICollectionViewCell, DismissibleCell {
+class PhotoCell: UICollectionViewCell {
 
     static let reusedIdentifier = "ExampleApp.PhotoCell"
 

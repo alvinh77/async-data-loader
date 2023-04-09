@@ -8,8 +8,7 @@
 import Foundation
 import AsyncDataLoader
 
-final class TestFileManager: FileManagerProtocol {
-
+final class TestFileManager: FileManagerProtocol, @unchecked Sendable {
     typealias URLsParams = (
         directory: FileManager.SearchPathDirectory,
         domainMask: FileManager.SearchPathDomainMask

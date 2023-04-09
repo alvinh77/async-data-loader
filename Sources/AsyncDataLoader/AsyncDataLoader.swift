@@ -13,7 +13,7 @@ public protocol AsyncDataLoaderProtocol {
     func clearCache() async throws
 }
 
-public enum DataStatus: Sendable {
+public enum DataStatus: Equatable, Sendable {
     case inProgress(Int)
     case finished(Data)
 }
@@ -35,24 +35,28 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
     }
 
     public func data(from url: String) async throws -> Data {
-        if let data = await inMemoryCacheMananger.object(forKey: url) { return data }
-        if let data = await diskCacheManager.object(forKey: url) {
-            try await inMemoryCacheMananger.set(data, forKey: url)
+        guard let url = URL(string: url) else { throw DataLoaderError.invalidURL }
+        if let data = await inMemoryCacheMananger.object(forKey: url.absoluteString) { return data }
+        if let data = await diskCacheManager.object(forKey: url.absoluteString) {
+            try await inMemoryCacheMananger.set(data, forKey: url.absoluteString)
             return data
         }
-        guard let url = URL(string: url) else { throw DataLoaderError.invalidURL }
         let (data, response) = try await serverSession.data(from: url)
         guard let statusCode = (response as? HTTPURLResponse)?.statusCode,
               (200...299).contains(statusCode) else { throw DataLoaderError.failedRequest }
-        _ = try await (
-            inMemoryCacheMananger.set(data, forKey: url.absoluteString),
-            diskCacheManager.set(data, forKey: url.absoluteString)
-        )
+        try await cache(data, forKey: url.absoluteString)
         return data
     }
 
     public func download(from url: String) async throws -> AsyncThrowingStream<DataStatus, Error> {
         guard let url = URL(string: url) else { throw DataLoaderError.invalidURL }
+        if let data = await inMemoryCacheMananger.object(forKey: url.absoluteString) {
+            return dataStatusStream(from: data)
+        }
+        if let data = await diskCacheManager.object(forKey: url.absoluteString) {
+            try await inMemoryCacheMananger.set(data, forKey: url.absoluteString)
+            return dataStatusStream(from: data)
+        }
         let (bytes, response) = try await serverSession.bytes(from: url)
         guard let statusCode = (response as? HTTPURLResponse)?.statusCode,
               (200...299).contains(statusCode) else { throw DataLoaderError.failedRequest }
@@ -71,6 +75,7 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
                         guard progress == 100 else { continue }
                     }
                     continuation.yield(.finished(data))
+                    try await cache(data, forKey: url.absoluteString)
                     continuation.finish()
                 } catch {
                     continuation.finish(throwing: error)
@@ -83,6 +88,24 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
         _ = try await (
             inMemoryCacheMananger.clearCache(),
             diskCacheManager.clearCache()
+        )
+    }
+}
+
+// MARK: - Helper
+
+extension AsyncDataLoader {
+    private func dataStatusStream(from data: Data) -> AsyncThrowingStream<DataStatus, Error> {
+        AsyncThrowingStream<DataStatus, Error> { continuation in
+            continuation.yield(.finished(data))
+            continuation.finish()
+        }
+    }
+
+    private func cache(_ data: Data, forKey: String) async throws {
+        _ = try await (
+            inMemoryCacheMananger.set(data, forKey: forKey),
+            diskCacheManager.set(data, forKey: forKey)
         )
     }
 }

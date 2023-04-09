@@ -7,8 +7,8 @@
 
 import Foundation
 
-public protocol CacheManagerProtocol: Actor {
-    func object(forKey key: String) -> Data?
-    func set(_ data: Data, forKey key: String) throws
-    func clearCache() throws
+public protocol CacheManagerProtocol {
+    func object(forKey key: String) async -> Data?
+    func set(_ data: Data, forKey key: String) async throws
+    func clearCache() async throws
 }

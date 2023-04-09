@@ -14,7 +14,7 @@ public actor DiskCacheManager: CacheManagerProtocol {
     public init(fileMananger: FileManagerProtocol) {
         self.fileMananger = fileMananger
     }
-    
+
     public func object(forKey key: String) -> Data? {
         guard let filePath = getFilePath(forKey: key)?.path else { return nil }
         return fileMananger.contents(atPath: filePath)

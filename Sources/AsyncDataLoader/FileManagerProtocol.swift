@@ -20,16 +20,16 @@ public protocol FileManagerProtocol: Sendable {
     func createDirectory(
         at url: URL,
         withIntermediateDirectories createIntermediates: Bool,
-        attributes: [FileAttributeKey : Any]?
+        attributes: [FileAttributeKey: Any]?
     ) throws
 
     func createFile(
         atPath path: String,
         contents data: Data?,
-        attributes attr: [FileAttributeKey : Any]?
+        attributes attr: [FileAttributeKey: Any]?
     ) -> Bool
 
-    func removeItem(at: URL) throws
+    func removeItem(at url: URL) throws
 }
 
 extension FileManager: FileManagerProtocol, @unchecked Sendable {}

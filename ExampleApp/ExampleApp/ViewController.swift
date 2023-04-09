@@ -13,7 +13,7 @@ class ViewController: UICollectionViewController {
     private let asyncDataLoader = AsyncDataLoader(
         diskCacheManager: DiskCacheManager(fileMananger: FileManager.default),
         inMemoryCacheMananger: InMemoryCacheManager(cache: .init()),
-        severSession: URLSession.shared
+        serverSession: URLSession.shared
     )
 
     @available(*, unavailable)

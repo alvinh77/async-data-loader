@@ -30,6 +30,7 @@ class ViewController: UICollectionViewController {
             action: #selector(clearCache)
         )
         navigationItem.title = "AsyncDataLoader Demo"
+        navigationItem.backButtonTitle = "Demo"
     }
 
     @objc private func clearCache() {
@@ -60,6 +61,14 @@ class ViewController: UICollectionViewController {
         )
 
         return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let photoViewController = PhotoViewController(
+            asyncDataLoader: asyncDataLoader,
+            index: indexPath.row
+        )
+        navigationController?.pushViewController(photoViewController, animated: true)
     }
 }
 

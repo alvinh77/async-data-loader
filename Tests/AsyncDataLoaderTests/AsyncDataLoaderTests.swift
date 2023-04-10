@@ -134,7 +134,7 @@ final class AsyncDataLoaderTests: XCTestCase {
         XCTAssertEqual(statusArray.count, 11)
         XCTAssertEqual(
             Array(statusArray[0...9]),
-            (1...10).map { DataStatus.inProgress($0 * 10) }
+            (1...10).map { DataStatus.inProgress(Double($0)/10) }
         )
         XCTAssertEqual(
             statusArray[10],

@@ -13,6 +13,7 @@
 		EFAC4E9E29A774CF00FC2D7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFAC4E9D29A774CF00FC2D7D /* Assets.xcassets */; };
 		EFAC4EA129A774CF00FC2D7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFAC4E9F29A774CF00FC2D7D /* LaunchScreen.storyboard */; };
 		EFE3176D29A86FD600A5580C /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE3176C29A86FD600A5580C /* PhotoCell.swift */; };
+		EFFB291429E38C2200EE03E0 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFB291329E38C2200EE03E0 /* PhotoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		EFAC4EA029A774CF00FC2D7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EFAC4EA229A774CF00FC2D7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFE3176C29A86FD600A5580C /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		EFFB291329E38C2200EE03E0 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 			children = (
 				EFAC4E9429A774CE00FC2D7D /* AppDelegate.swift */,
 				EFE3176C29A86FD600A5580C /* PhotoCell.swift */,
+				EFFB291329E38C2200EE03E0 /* PhotoViewController.swift */,
 				EFAC4E9829A774CE00FC2D7D /* ViewController.swift */,
 				EFAC4E9D29A774CF00FC2D7D /* Assets.xcassets */,
 				EFAC4E9F29A774CF00FC2D7D /* LaunchScreen.storyboard */,
@@ -158,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFAC4E9929A774CE00FC2D7D /* ViewController.swift in Sources */,
+				EFFB291429E38C2200EE03E0 /* PhotoViewController.swift in Sources */,
 				EFE3176D29A86FD600A5580C /* PhotoCell.swift in Sources */,
 				EFAC4E9529A774CE00FC2D7D /* AppDelegate.swift in Sources */,
 			);

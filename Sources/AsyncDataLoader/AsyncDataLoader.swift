@@ -13,11 +13,6 @@ public protocol AsyncDataLoaderProtocol {
     func clearCache() async throws
 }
 
-public enum DataStatus: Equatable, Sendable {
-    case inProgress(Int)
-    case finished(Data)
-}
-
 public struct AsyncDataLoader: AsyncDataLoaderProtocol {
 
     private let diskCacheManager: CacheManagerProtocol
@@ -65,14 +60,17 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
             Task {
                 do {
                     var data = Data()
-                    var progress = 0
+                    var currentSize = 0
+                    var currentPercent = 0
                     for try await byte in bytes {
                         data.append(byte)
-                        let newProgress = Int(Double(data.count) * 100 / Double(dataSize))
-                        guard newProgress > progress else { continue }
-                        progress = newProgress
-                        continuation.yield(.inProgress(progress))
-                        guard progress == 100 else { continue }
+                        currentSize += 1
+                        let newProgress = Double(currentSize) / Double(dataSize)
+                        let newPercent = Int(newProgress * 100)
+                        guard newPercent > currentPercent else { continue }
+                        currentPercent = newPercent
+                        continuation.yield(.inProgress(newProgress))
+                        print("continuation.yield(.inProgress(\(newProgress))")
                     }
                     continuation.yield(.finished(data))
                     try await cache(data, forKey: url.absoluteString)

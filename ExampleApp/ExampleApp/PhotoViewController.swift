@@ -13,6 +13,7 @@ class PhotoViewController: UIViewController {
     private let asyncDataLoader: AsyncDataLoaderProtocol
     private let index: Int
     private var imageURL: String {
+//        "https://simpl.info/bigimage/bigImage.jpg"
         "https://picsum.photos/id/\(index)/\(Int(view.bounds.width) * 5)/\(Int(view.bounds.height) * 5)"
     }
     private var imageLoadingTask: Task<Void, Error>?
@@ -77,7 +78,7 @@ class PhotoViewController: UIViewController {
                     case let .inProgress(progress):
                         progressIndicator.isHidden = false
                         progressIndicator.setProgress(Float(progress), animated: true)
-                        print(".inProgress(\(progress))")
+                        print(".setProgress(\(progress))")
                     case let .finished(data):
                         progressIndicator.isHidden = true
                         imageView.image = UIImage(data: data)

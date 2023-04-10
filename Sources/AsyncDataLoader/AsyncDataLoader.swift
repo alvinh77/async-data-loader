@@ -57,7 +57,7 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
               (200...299).contains(statusCode) else { throw DataLoaderError.failedRequest }
         let dataSize = response.expectedContentLength
         return AsyncThrowingStream<DataStatus, Error> { continuation in
-            Task {
+            let task = Task {
                 do {
                     var data = Data()
                     var currentSize = 0
@@ -79,6 +79,7 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
                     continuation.finish(throwing: error)
                 }
             }
+            continuation.onTermination = { _ in task.cancel() }
         }
     }
 

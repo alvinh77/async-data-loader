@@ -11,15 +11,18 @@ import XCTest
 final class AsyncDataLoaderTests: XCTestCase {
     private var dataLoader: AsyncDataLoader!
     private var diskCacheManager: TestCacheMananger!
+    private var downloadManager: TestDownloadManager!
     private var inMemoryCacheManager: TestCacheMananger!
     private var serverSession: TestServerSession!
 
     override func setUp() {
         diskCacheManager = .init()
+        downloadManager = .init()
         inMemoryCacheManager = .init()
         serverSession = .init()
         dataLoader = AsyncDataLoader(
             diskCacheManager: diskCacheManager,
+            downloadManager: downloadManager,
             inMemoryCacheMananger: inMemoryCacheManager,
             serverSession: serverSession
         )
@@ -82,7 +85,7 @@ final class AsyncDataLoaderTests: XCTestCase {
     func test_downloadData_whenCacheIsAvaiableInMemory() async throws {
         inMemoryCacheManager.data = Data()
         let stream = try await dataLoader.download(from: "http://www.test.com")
-        XCTAssertEqual(serverSession.bytesCallCount, 0)
+        XCTAssertEqual(downloadManager.downloadCallCount, 0)
         var statusArray: [DataStatus] = []
         for try await status in stream {
             statusArray.append(status)
@@ -97,7 +100,7 @@ final class AsyncDataLoaderTests: XCTestCase {
     func test_downloadData_whenCacheIsAvaiableInDisk() async throws {
         diskCacheManager.data = Data()
         let stream = try await dataLoader.download(from: "http://www.test.com")
-        XCTAssertEqual(serverSession.bytesCallCount, 0)
+        XCTAssertEqual(downloadManager.downloadCallCount, 0)
         var statusArray: [DataStatus] = []
         for try await status in stream {
             statusArray.append(status)
@@ -113,38 +116,27 @@ final class AsyncDataLoaderTests: XCTestCase {
         XCTAssertEqual(diskCacheManager.objectKey, "http://www.test.com")
     }
 
-    func test_downloadData_whenCacheIsNotAvaiableAndRequestFailed() async throws {
-        serverSession.response = TestServerSession.httpResponse(statusCode: 500)
-        do {
-            _ = try await dataLoader.download(from: "http://www.test.com")
-            XCTAssertEqual(serverSession.bytesCallCount, 1)
-            XCTFail("An error is expected to be thrown")
-        } catch {
-            XCTAssertEqual(error as? DataLoaderError, .failedRequest)
-        }
-    }
-
     func test_downloadData_whenCacheIsNotAvaiable() async throws {
         let stream = try await dataLoader.download(from: "http://www.test.com")
-        XCTAssertEqual(serverSession.bytesCallCount, 1)
         var statusArray: [DataStatus] = []
         for try await status in stream {
             statusArray.append(status)
         }
-        XCTAssertEqual(statusArray.count, 11)
         XCTAssertEqual(
-            Array(statusArray[0...9]),
-            (1...10).map { DataStatus.inProgress(Double($0)/10) }
+            statusArray,
+            [
+                .inProgress(0.25),
+                .inProgress(0.75),
+                .finished(downloadManager.data),
+            ]
         )
-        XCTAssertEqual(
-            statusArray[10],
-            .finished(TestServerSession.exampleData())
-        )
+        XCTAssertEqual(downloadManager.downloadCallCount, 1)
+        XCTAssertEqual(downloadManager.url?.absoluteString, "http://www.test.com")
         XCTAssertEqual(inMemoryCacheManager.setCallCount, 1)
-        XCTAssertEqual(inMemoryCacheManager.setData, TestServerSession.exampleData())
+        XCTAssertEqual(inMemoryCacheManager.setData, downloadManager.data)
         XCTAssertEqual(inMemoryCacheManager.setKey, "http://www.test.com")
         XCTAssertEqual(diskCacheManager.setCallCount, 1)
-        XCTAssertEqual(diskCacheManager.setData, TestServerSession.exampleData())
+        XCTAssertEqual(diskCacheManager.setData, downloadManager.data)
         XCTAssertEqual(diskCacheManager.setKey, "http://www.test.com")
     }
 

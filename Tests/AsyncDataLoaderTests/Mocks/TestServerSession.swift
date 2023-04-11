@@ -10,7 +10,8 @@ import AsyncDataLoader
 
 final class TestServerSession: ServerSessionProtocol {
     private(set) var dataCallCount = 0
-    private(set) var bytesCallCount = 0
+    private(set) var downloadCallCount = 0
+    private(set) var url: URL?
     var data = exampleData()
     var response = httpResponse(statusCode: 200)
     var stream = AsyncThrowingStream<UInt8, Error> { continuation in
@@ -20,14 +21,16 @@ final class TestServerSession: ServerSessionProtocol {
         continuation.finish()
     }
     
-    func data(from: URL) async throws -> (Data, URLResponse) {
+    func data(from url: URL) async throws -> (Data, URLResponse) {
         dataCallCount += 1
+        self.url = url
         return (data, response)
     }
-    
-    func bytes(from url: URL) async throws -> (AsyncThrowingStream<UInt8, Error>, URLResponse) {
-        bytesCallCount += 1
-        return (stream, response)
+
+    func download(from url: URL) -> DownloadTask {
+        downloadCallCount += 1
+        self.url = url
+        return TestDownloadTask()
     }
     
     static func httpResponse(statusCode: Int) -> HTTPURLResponse {

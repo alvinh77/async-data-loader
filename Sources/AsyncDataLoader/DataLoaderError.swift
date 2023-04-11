@@ -10,4 +10,5 @@ import Foundation
 public enum DataLoaderError: Error {
     case invalidURL
     case failedRequest
+    case dataNotFound
 }

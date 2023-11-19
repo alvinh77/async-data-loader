@@ -63,9 +63,11 @@ extension DownloadSession: URLSessionDownloadDelegate {
     ) {
         guard let data = dataProvider(location) else {
             continuation?.finish(throwing: DataLoaderError.dataNotFound)
+            continuation = nil
             return
         }
         continuation?.yield(.finished(data))
         continuation?.finish()
+        continuation = nil
     }
 }

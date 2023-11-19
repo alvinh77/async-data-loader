@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  PhotosCollectionViewController.swift
 //  ExampleApp
 //
 //  Created by Alvin He on 23/2/2023.
@@ -8,38 +8,23 @@
 import AsyncDataLoader
 import UIKit
 
-class ViewController: UICollectionViewController {
-
-    private let asyncDataLoader = AsyncDataLoader(
-        diskCacheManager: DiskCacheManager(fileMananger: FileManager.default),
-        downloadManager: DownloadManager(
-            downloadSessionFactory: DownloadSessionFactory(serverSession: URLSession.shared)
-        ),
-        inMemoryCacheMananger: InMemoryCacheManager(cache: .init()),
-        serverSession: URLSession.shared
-    )
+class PhotosCollectionViewController: UICollectionViewController {
+    private let asyncDataLoader: AsyncDataLoaderProtocol
 
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override init(collectionViewLayout layout: UICollectionViewLayout) {
+    init(
+        asyncDataLoader: AsyncDataLoaderProtocol,
+        collectionViewLayout layout: UICollectionViewLayout
+    ) {
+        self.asyncDataLoader = asyncDataLoader
         super.init(collectionViewLayout: layout)
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reusedIdentifier)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .trash,
-            target: self,
-            action: #selector(clearCache)
-        )
-        navigationItem.title = "AsyncDataLoader Demo"
-        navigationItem.backButtonTitle = "Demo"
-    }
-
-    @objc private func clearCache() {
-        Task {
-            try await asyncDataLoader.clearCache()
-        }
+        navigationItem.title = "UIKit Demo"
+        navigationItem.backButtonTitle = "UIKit"
     }
 
     // DataSource
@@ -75,7 +60,7 @@ class ViewController: UICollectionViewController {
     }
 }
 
-extension ViewController {
+extension PhotosCollectionViewController {
     static var collectionViewLayout: UICollectionViewCompositionalLayout = {
         let fraction: CGFloat = 1 / 3
 

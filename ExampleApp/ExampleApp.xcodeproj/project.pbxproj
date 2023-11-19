@@ -7,23 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF0877F22B071DB800F352E4 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0877F12B071DB800F352E4 /* DemoViewController.swift */; };
 		EF49132529A88C57000BC88F /* AsyncDataLoader in Frameworks */ = {isa = PBXBuildFile; productRef = EF49132429A88C57000BC88F /* AsyncDataLoader */; };
 		EFAC4E9529A774CE00FC2D7D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAC4E9429A774CE00FC2D7D /* AppDelegate.swift */; };
-		EFAC4E9929A774CE00FC2D7D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAC4E9829A774CE00FC2D7D /* ViewController.swift */; };
 		EFAC4E9E29A774CF00FC2D7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFAC4E9D29A774CF00FC2D7D /* Assets.xcassets */; };
 		EFAC4EA129A774CF00FC2D7D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFAC4E9F29A774CF00FC2D7D /* LaunchScreen.storyboard */; };
+		EFD5F5CE2B07276000C0BCD2 /* PhotosListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5F5CD2B07276000C0BCD2 /* PhotosListView.swift */; };
+		EFD5F5D02B07278E00C0BCD2 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD5F5CF2B07278E00C0BCD2 /* PhotosCollectionViewController.swift */; };
 		EFE3176D29A86FD600A5580C /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE3176C29A86FD600A5580C /* PhotoCell.swift */; };
 		EFFB291429E38C2200EE03E0 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFFB291329E38C2200EE03E0 /* PhotoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF0877F12B071DB800F352E4 /* DemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoViewController.swift; sourceTree = "<group>"; };
 		EF53D64029A88B8A001A1592 /* AsyncDataLoader */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AsyncDataLoader; path = ..; sourceTree = "<group>"; };
 		EFAC4E9129A774CE00FC2D7D /* ExampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFAC4E9429A774CE00FC2D7D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EFAC4E9829A774CE00FC2D7D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EFAC4E9D29A774CF00FC2D7D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EFAC4EA029A774CF00FC2D7D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EFAC4EA229A774CF00FC2D7D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFD5F5CD2B07276000C0BCD2 /* PhotosListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosListView.swift; sourceTree = "<group>"; };
+		EFD5F5CF2B07278E00C0BCD2 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
 		EFE3176C29A86FD600A5580C /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		EFFB291329E38C2200EE03E0 /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,9 +81,11 @@
 			isa = PBXGroup;
 			children = (
 				EFAC4E9429A774CE00FC2D7D /* AppDelegate.swift */,
+				EF0877F12B071DB800F352E4 /* DemoViewController.swift */,
 				EFE3176C29A86FD600A5580C /* PhotoCell.swift */,
+				EFD5F5CF2B07278E00C0BCD2 /* PhotosCollectionViewController.swift */,
+				EFD5F5CD2B07276000C0BCD2 /* PhotosListView.swift */,
 				EFFB291329E38C2200EE03E0 /* PhotoViewController.swift */,
-				EFAC4E9829A774CE00FC2D7D /* ViewController.swift */,
 				EFAC4E9D29A774CF00FC2D7D /* Assets.xcassets */,
 				EFAC4E9F29A774CF00FC2D7D /* LaunchScreen.storyboard */,
 				EFAC4EA229A774CF00FC2D7D /* Info.plist */,
@@ -118,7 +124,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					EFAC4E9029A774CE00FC2D7D = {
 						CreatedOnToolsVersion = 14.2;
@@ -160,10 +166,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFAC4E9929A774CE00FC2D7D /* ViewController.swift in Sources */,
+				EFD5F5CE2B07276000C0BCD2 /* PhotosListView.swift in Sources */,
 				EFFB291429E38C2200EE03E0 /* PhotoViewController.swift in Sources */,
 				EFE3176D29A86FD600A5580C /* PhotoCell.swift in Sources */,
+				EFD5F5D02B07278E00C0BCD2 /* PhotosCollectionViewController.swift in Sources */,
 				EFAC4E9529A774CE00FC2D7D /* AppDelegate.swift in Sources */,
+				EF0877F22B071DB800F352E4 /* DemoViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -217,6 +225,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -277,6 +286,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

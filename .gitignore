@@ -27,7 +27,7 @@ DerivedData/
 
 ## Code Coverage
 .DerivedData/
-codecov.info
+*.lcov
 
 ## App packaging
 *.ipa

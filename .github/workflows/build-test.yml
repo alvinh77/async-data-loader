@@ -16,29 +16,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      
-    - name: Install xcov
-      run: gem install xcov
 
     - name: Switch to xcode 15.2
       run: sudo xcode-select --switch /Applications/Xcode_15.2.app
 
     - name: Test Swift Package
-      run: xcodebuild test -scheme AsyncDataLoader -destination 'platform=iOS Simulator,OS=17.2,name=iPhone 15 Pro' -enableCodeCoverage YES -derivedDataPath .DerivedData/ clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+      run: |
+        xcodebuild test -scheme AsyncDataLoader -destination 'platform=iOS Simulator,OS=17.2,name=iPhone 15 Pro' -enableCodeCoverage YES -derivedDataPath .DerivedData/ clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        pathCoverage=.DerivedData/Build/ProfileData/*/Coverage.profdata
+        output=.DerivedData/Build/Products/Debug-iphonesimulator/AsyncDataLoader.o
+        xcrun llvm-cov export -format="lcov" -instr-profile $pathCoverage $output > info.lcov
         
-    - name: Generate Coverage
-      run: xcrun llvm-cov report -instr-profile .DerivedData/Build/ProfileData/*/Coverage.profdata .DerivedData/Build/Products/Debug-iphonesimulator/AsyncDataLoader.o > codecov.txt
-
-    - name: Create Comment
-      uses: peter-evans/create-or-update-comment@v4
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4.0.1
       with:
-        comment-id: ${{ steps.fc.outputs.comment-id }}
-        issue-number: ${{ github.event.pull_request.number }}
-        body-path: 'codecov.txt'
-        edit-mode: replace
-
-    - name: Upload Code Coverage Report
-      uses: actions/upload-artifact@v4
-      with:
-        name: code-coverage
-        path: codecov.txt
+        token: ${{ secrets.CODECOV_TOKEN }}
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        slug: alvinh77/async-data-loader

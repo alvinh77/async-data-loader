@@ -3,6 +3,7 @@
 
 [![Swift Version][swift-image]][swift-url]
 [![License][license-image]][license-url]
+[![codecov](https://codecov.io/gh/alvinh77/async-data-loader/graph/badge.svg?token=ORSSZ7CCA8)](https://codecov.io/gh/alvinh77/async-data-loader)
 
 ## Features
 - Asynchronous data loading from a URL
@@ -69,6 +70,9 @@ try await asyncDataLoader.clearCache()
 - Swift 5.9+
 - iOS 15.0+
 - Xcode 15.0+
+
+## Coverage
+![Logo](https://codecov.io/gh/alvinh77/async-data-loader/graphs/tree.svg?token=ORSSZ7CCA8)
 
 ## License
 `AsyncDataLoader` is available under the MIT license. See the [LICENSE][license-url] file for more information.

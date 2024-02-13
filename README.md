@@ -66,9 +66,9 @@ try await asyncDataLoader.clearCache()
 ```
 
 ## Requirements
-- Swift 5.5+
+- Swift 5.9+
 - iOS 15.0+
-- Xcode 13.0+
+- Xcode 15.0+
 
 ## License
 `AsyncDataLoader` is available under the MIT license. See the [LICENSE][license-url] file for more information.

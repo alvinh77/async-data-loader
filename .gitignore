@@ -25,6 +25,10 @@ DerivedData/
 ## Obj-C/Swift specific
 *.hmap
 
+## Code Coverage
+.DerivedData/
+codecov.info
+
 ## App packaging
 *.ipa
 *.dSYM.zip

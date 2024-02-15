@@ -83,6 +83,14 @@ final class AsyncDataLoaderTests: XCTestCase {
         XCTAssertEqual(diskCacheManager.setKey, "http://www.test.com")
     }
 
+    func test_downloadData_whenURLIsInvalid_returnsError() async throws {
+        do {
+            _ = try await dataLoader.download(from: "")
+        } catch {
+            XCTAssertEqual(error as? DataLoaderError, .invalidURL)
+        }
+    }
+
     func test_downloadData_whenCacheIsAvaiableInMemory() async throws {
         inMemoryCacheManager.data = Data()
         let stream = try await dataLoader.download(from: "http://www.test.com")

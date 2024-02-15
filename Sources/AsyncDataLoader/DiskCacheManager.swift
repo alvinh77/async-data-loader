@@ -16,8 +16,14 @@ public actor DiskCacheManager: CacheManagerProtocol {
     }
 
     public func object(forKey key: String) -> Data? {
-        guard let filePath = getFilePath(forKey: key)?.path else { return nil }
-        return fileMananger.contents(atPath: filePath)
+        guard let cacheDirectory else { return nil }
+        let filePath = getFilePath(
+            cacheDirectory: cacheDirectory,
+            forKey: key
+        ).path
+        return fileMananger.contents(
+            atPath: filePath
+        )
     }
 
     public func set(_ data: Data, forKey key: String) throws {
@@ -29,7 +35,10 @@ public actor DiskCacheManager: CacheManagerProtocol {
                 attributes: nil
             )
         }
-        guard let filePath = getFilePath(forKey: key)?.path else { return }
+        let filePath = getFilePath(
+            cacheDirectory: cacheDirectory,
+            forKey: key
+        ).path
         _ = fileMananger.createFile(atPath: filePath, contents: data, attributes: nil)
     }
 
@@ -45,7 +54,10 @@ public actor DiskCacheManager: CacheManagerProtocol {
         ).first?.appendingPathComponent("ImageCache")
     }
 
-    private func getFilePath(forKey key: String) -> URL? {
-        cacheDirectory?.appendingPathComponent("\(key.hash)")
+    private func getFilePath(
+        cacheDirectory: URL,
+        forKey key: String
+    ) -> URL {
+        cacheDirectory.appendingPathComponent("\(key.hash)")
     }
 }

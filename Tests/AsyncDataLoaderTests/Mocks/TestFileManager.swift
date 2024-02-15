@@ -40,18 +40,18 @@ final class TestFileManager: FileManagerProtocol, @unchecked Sendable {
     private(set) var removeItemCalledCount = 0
     private(set) var removeItemCalledParam: RemoveItemCalledParam?
 
-    var url: URL
+    var urls: [URL]
     var fileExistsResult: Bool
     var contentResult: Data?
     var createFileResult: Bool
 
     init(
-        url: URL = .init(string: "file:///Users/tester/Caches")!,
+        urls: [URL] = [.init(string: "file:///Users/tester/Caches")!],
         fileExistsResult: Bool = false,
         contentResult: Data? = "TestData".data(using: .utf8),
         createFileResult: Bool = true
     ) {
-        self.url = url
+        self.urls = urls
         self.fileExistsResult = fileExistsResult
         self.contentResult = contentResult
         self.createFileResult = createFileResult
@@ -63,7 +63,7 @@ final class TestFileManager: FileManagerProtocol, @unchecked Sendable {
     ) -> [URL] {
         urlsCalledParams = (directory, domainMask)
         urlsCalledCount += 1
-        return [url]
+        return urls
     }
 
     func fileExists(atPath path: String) -> Bool {

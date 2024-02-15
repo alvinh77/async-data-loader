@@ -12,6 +12,9 @@
 - Support for in-memory caching and disk caching
 - Customizable cache and download managers
 
+### Screenshots
+https://github.com/alvinh77/async-data-loader/assets/12960590/b02712d0-87cb-4aee-92ec-90a1e3d387c4
+
 ## Installation
 You can integrate AsyncDataLoader into your project using Swift Package Manager (SPM) or manually.
 
@@ -71,7 +74,7 @@ try await asyncDataLoader.clearCache()
 - iOS 15.0+
 - Xcode 15.0+
 
-## Coverage
+## Code Coverage
 ![Logo](https://codecov.io/gh/alvinh77/async-data-loader/graphs/tree.svg?token=ORSSZ7CCA8)
 
 ## License

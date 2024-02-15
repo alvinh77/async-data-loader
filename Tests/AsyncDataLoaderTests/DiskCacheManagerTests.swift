@@ -6,6 +6,7 @@
 //
 
 import XCTest
+
 @testable import AsyncDataLoader
 
 final class DiskCacheManagerTests: XCTestCase {

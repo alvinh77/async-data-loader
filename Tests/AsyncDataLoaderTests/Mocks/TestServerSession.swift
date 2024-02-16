@@ -20,7 +20,7 @@ final class TestServerSession: ServerSessionProtocol {
         }
         continuation.finish()
     }
-    
+
     func data(from url: URL) async throws -> (Data, URLResponse) {
         dataCallCount += 1
         self.url = url
@@ -32,7 +32,7 @@ final class TestServerSession: ServerSessionProtocol {
         self.url = url
         return TestDownloadTask()
     }
-    
+
     static func httpResponse(statusCode: Int) -> HTTPURLResponse {
         HTTPURLResponse(
             url: URL(string: "https://www.test.com")!,

@@ -16,7 +16,7 @@ public protocol ServerSessionProtocol {
     /// - Returns: A tuple containing the retrieved data and the response.
     /// - Throws: An error if the operation fails.
     func data(from url: URL) async throws -> (Data, URLResponse)
-    
+
     /// Initiates a download task for the specified URL.
     ///
     /// - Parameters:
@@ -29,10 +29,10 @@ public protocol ServerSessionProtocol {
 public protocol DownloadTask {
     /// The delegate to handle various task events.
     var delegate: URLSessionTaskDelegate? { get set }
-    
+
     /// Resumes the download task.
     func resume()
-    
+
     /// Cancels the download task.
     func cancel()
 }

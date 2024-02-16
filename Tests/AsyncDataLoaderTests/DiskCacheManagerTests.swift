@@ -22,7 +22,7 @@ final class DiskCacheManagerTests: XCTestCase {
         XCTAssertEqual(dependency.contentsCalledCount, 1)
         XCTAssertEqual(dependency.contentsCalledParams, "/Users/tester/Caches/ImageCache/4171614418690781136")
     }
-    
+
     func test_retrieveObject_whenCacheDirectoryDoesNotExist() async throws {
         let dependency = TestFileManager(urls: [])
         let fileManager = DiskCacheManager(fileMananger: dependency)
@@ -74,7 +74,7 @@ final class DiskCacheManagerTests: XCTestCase {
         XCTAssertEqual(dependency.removeItemCalledCount, 1)
         XCTAssertEqual(dependency.removeItemCalledParam?.absoluteString, "file:///Users/tester/Caches/ImageCache")
     }
-    
+
     func test_clearCache_whenCacheDirectoryDoesNotExist() async throws {
         let dependency = TestFileManager(urls: [])
         let fileManager = DiskCacheManager(fileMananger: dependency)

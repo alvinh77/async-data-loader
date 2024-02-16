@@ -37,13 +37,13 @@ final class DownloadSessionTests: XCTestCase {
         for try await status in downloadStream {
             statuses.append(status)
         }
-        
+
         XCTAssertEqual(
             statuses,
             [.inProgress(0.5), .finished(Data(count: 10))]
         )
     }
-    
+
     func test_downloadStream_whenFinishButCouldNotFindData() async throws {
         let url = try XCTUnwrap(URL(string: "file:///Users"))
         let downloadSession = DownloadSession(
@@ -67,7 +67,7 @@ final class DownloadSessionTests: XCTestCase {
         } catch {
             XCTAssertEqual(error as? DataLoaderError, .dataNotFound)
         }
-        
+
         XCTAssertEqual(statuses.count, 0)
     }
 }

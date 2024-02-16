@@ -136,7 +136,7 @@ final class AsyncDataLoaderTests: XCTestCase {
             [
                 .inProgress(0.25),
                 .inProgress(0.75),
-                .finished(downloadManager.data),
+                .finished(downloadManager.data)
             ]
         )
         XCTAssertEqual(downloadManager.downloadCallCount, 1)

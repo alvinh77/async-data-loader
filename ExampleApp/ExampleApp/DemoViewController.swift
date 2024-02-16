@@ -25,7 +25,7 @@ class DemoViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20)
         ])
         button.setTitle("UIKit Demo", for: .normal)
         return button
@@ -37,7 +37,7 @@ class DemoViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20),
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 20)
         ])
         button.setTitle("SwiftUI Demo", for: .normal)
         return button
@@ -64,7 +64,7 @@ class DemoViewController: UIViewController {
             action: #selector(clearCache)
         )
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

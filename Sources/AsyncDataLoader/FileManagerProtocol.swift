@@ -26,7 +26,8 @@ public protocol FileManagerProtocol: Sendable {
     /// Returns the contents of the file at the specified path.
     ///
     /// - Parameter path: The path to the file.
-    /// - Returns: The data representing the contents of the file, or `nil` if the file does not exist or cannot be read.
+    /// - Returns: The data representing the contents of the file, or `nil`
+    /// if the file does not exist or cannot be read.
     func contents(atPath: String) -> Data?
 
     /// Creates a directory with the specified attributes.
@@ -36,7 +37,11 @@ public protocol FileManagerProtocol: Sendable {
     ///   - createIntermediates: If `true`, creates intermediate directories as needed.
     ///   - attributes: The attributes for the directory.
     /// - Throws: An error if the operation fails.
-    func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey: Any]?) throws
+    func createDirectory(
+        at url: URL,
+        withIntermediateDirectories createIntermediates: Bool,
+        attributes: [FileAttributeKey: Any]?
+    ) throws
 
     /// Creates a file with the specified contents and attributes at the specified path.
     ///

@@ -18,7 +18,7 @@ public protocol DownloadManagerProtocol {
 
 public final class DownloadManager: DownloadManagerProtocol {
     private let downloadSessionFactory: DownloadSessionFactoryProtocol
-    // TODO: Replace this with a hash storage to make it more unit testable.
+    // notaTODO: Replace this with a hash storage to make it more unit testable.
     private var downloadSessions: [URL: DownloadSessionProtocol] = [:]
 
     public init(downloadSessionFactory: DownloadSessionFactoryProtocol) {

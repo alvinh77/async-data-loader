@@ -15,16 +15,6 @@ final class TestFileManager: FileManagerProtocol, @unchecked Sendable {
     )
     typealias FileExistsParams = String
     typealias ContentsParams = String
-    typealias CreateDirectoryParams = (
-        url: URL,
-        createIntermediates: Bool,
-        attributes: [FileAttributeKey : Any]?
-    )
-    typealias CreateFileCalledParam = (
-        path: String,
-        data: Data?,
-        attr: [FileAttributeKey : Any]?
-    )
     typealias RemoveItemCalledParam = URL
 
     private(set) var urlsCalledCount = 0
@@ -81,24 +71,38 @@ final class TestFileManager: FileManagerProtocol, @unchecked Sendable {
     func createDirectory(
         at url: URL,
         withIntermediateDirectories createIntermediates: Bool,
-        attributes: [FileAttributeKey : Any]?
+        attributes: [FileAttributeKey: Any]?
     ) throws {
-        createDirectoryCalledParam = (url: url, createIntermediates: createIntermediates, attributes: attributes)
+        createDirectoryCalledParam = .init(url: url, createIntermediates: createIntermediates, attributes: attributes)
         createDirectoryCalledCount += 1
     }
 
     func createFile(
         atPath path: String,
         contents data: Data?,
-        attributes attr: [FileAttributeKey : Any]?
+        attributes attr: [FileAttributeKey: Any]?
     ) -> Bool {
-        createFileCalledParam = (path: path, data: data, attr: attr)
+        createFileCalledParam = .init(path: path, data: data, attr: attr)
         createFileCalledCount += 1
         return createFileResult
     }
 
-    func removeItem(at: URL) throws {
-        removeItemCalledParam = at
+    func removeItem(at url: URL) throws {
+        removeItemCalledParam = url
         removeItemCalledCount += 1
+    }
+}
+
+extension TestFileManager {
+    struct CreateDirectoryParams {
+        let url: URL
+        let createIntermediates: Bool
+        let attributes: [FileAttributeKey: Any]?
+    }
+
+    struct CreateFileCalledParam {
+        let path: String
+        let data: Data?
+        let attr: [FileAttributeKey: Any]?
     }
 }

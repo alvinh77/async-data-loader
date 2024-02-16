@@ -25,7 +25,7 @@ class PhotoViewController: UIViewController {
         NSLayoutConstraint.activate([
             indicator.leftAnchor.constraint(equalTo: view.leftAnchor),
             indicator.rightAnchor.constraint(equalTo: view.rightAnchor),
-            indicator.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            indicator.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
         return indicator
     }()
@@ -38,7 +38,7 @@ class PhotoViewController: UIViewController {
             imageView.leftAnchor.constraint(equalTo: view.leftAnchor),
             imageView.rightAnchor.constraint(equalTo: view.rightAnchor),
             imageView.topAnchor.constraint(equalTo: view.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         return imageView
     }()

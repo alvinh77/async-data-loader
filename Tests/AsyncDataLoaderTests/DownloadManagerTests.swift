@@ -22,7 +22,7 @@ final class DownloadManagerTests: XCTestCase {
         for try await dataStatus in downloadStream {
             dataStatuses.append(dataStatus)
         }
-        
+
         XCTAssertEqual(dataStatuses, [.inProgress(1)])
     }
 }

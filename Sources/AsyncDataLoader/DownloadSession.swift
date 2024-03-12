@@ -7,10 +7,6 @@
 
 import Foundation
 
-public protocol DownloadSessionProtocol {
-    var downloadStream: AsyncThrowingStream<DataStatus, Error> { get }
-}
-
 public final class DownloadSession: NSObject, DownloadSessionProtocol {
     private let url: URL
     private let serverSession: ServerSessionProtocol

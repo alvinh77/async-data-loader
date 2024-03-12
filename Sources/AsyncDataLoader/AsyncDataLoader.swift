@@ -7,14 +7,7 @@
 
 import Foundation
 
-public protocol AsyncDataLoaderProtocol {
-    func data(from urlString: String) async throws -> Data
-    func download(from urlString: String) async throws -> AsyncThrowingStream<DataStatus, Error>
-    func clearCache() async throws
-}
-
 public struct AsyncDataLoader: AsyncDataLoaderProtocol {
-
     private let diskCacheManager: CacheManagerProtocol
     private let downloadManager: DownloadManagerProtocol
     private let inMemoryCacheMananger: CacheManagerProtocol

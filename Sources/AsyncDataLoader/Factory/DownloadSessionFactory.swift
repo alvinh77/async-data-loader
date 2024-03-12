@@ -7,10 +7,6 @@
 
 import Foundation
 
-public protocol DownloadSessionFactoryProtocol {
-    func makeSession(url: URL) -> DownloadSessionProtocol
-}
-
 public struct DownloadSessionFactory: DownloadSessionFactoryProtocol {
     private let serverSession: ServerSessionProtocol
 

@@ -47,7 +47,7 @@ class PhotosCollectionViewController: UICollectionViewController {
             ) as? PhotoCell else { return UICollectionViewCell() }
 
         cell.loadImage(
-            "https://picsum.photos/id/\(indexPath.row)/\(Int(cell.bounds.width*2))/\(Int(cell.bounds.height*2))",
+            "https://picsum.photos/id/\(indexPath.row)/200/200",
             asyncDataLoader: asyncDataLoader
         )
 

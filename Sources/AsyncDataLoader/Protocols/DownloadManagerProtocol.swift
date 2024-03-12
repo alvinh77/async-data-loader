@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol representing a download manager for downloading data from URLs.
-public protocol DownloadManagerProtocol {
+public protocol DownloadManagerProtocol: Sendable {
     /// Initiates a download operation from the specified URL.
     ///
     /// - Parameter url: The URL from which to download data.

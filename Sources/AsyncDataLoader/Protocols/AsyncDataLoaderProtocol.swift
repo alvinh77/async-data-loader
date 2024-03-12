@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol AsyncDataLoaderProtocol {
+public protocol AsyncDataLoaderProtocol: Sendable {
     func data(from urlString: String) async throws -> Data
     func download(from urlString: String) async throws -> AsyncThrowingStream<DataStatus, Error>
     func clearCache() async throws

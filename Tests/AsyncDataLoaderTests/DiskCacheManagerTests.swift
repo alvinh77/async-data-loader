@@ -10,11 +10,11 @@ import XCTest
 @testable import AsyncDataLoader
 
 final class DiskCacheManagerTests: XCTestCase {
-    func test_retrieveObject() async throws {
+    func test_retrieveObject() throws {
         let dependency = TestFileManager()
         let fileManager = DiskCacheManager(fileMananger: dependency)
 
-        _ = await fileManager.object(forKey: "TestKey")
+        _ = fileManager.object(forKey: "TestKey")
 
         XCTAssertEqual(dependency.urlsCalledCount, 1)
         XCTAssertEqual(dependency.urlsCalledParams?.directory, .cachesDirectory)
@@ -23,10 +23,10 @@ final class DiskCacheManagerTests: XCTestCase {
         XCTAssertEqual(dependency.contentsCalledParams, "/Users/tester/Caches/ImageCache/4171614418690781136")
     }
 
-    func test_retrieveObject_whenCacheDirectoryDoesNotExist() async throws {
+    func test_retrieveObject_whenCacheDirectoryDoesNotExist() throws {
         let dependency = TestFileManager(urls: [])
         let fileManager = DiskCacheManager(fileMananger: dependency)
-        let object = await fileManager.object(forKey: "TestKey")
+        let object = fileManager.object(forKey: "TestKey")
 
         XCTAssertNil(object)
         XCTAssertEqual(dependency.urlsCalledCount, 1)
@@ -35,11 +35,11 @@ final class DiskCacheManagerTests: XCTestCase {
         XCTAssertEqual(dependency.contentsCalledCount, 0)
     }
 
-    func test_setObject_whenCacheDirectoryDoesNotExist() async throws {
+    func test_setObject_whenCacheDirectoryDoesNotExist() throws {
         let dependency = TestFileManager(urls: [])
         let fileManager = DiskCacheManager(fileMananger: dependency)
 
-        try await fileManager.set("TestData".data(using: .utf8)!, forKey: "TestKey")
+        try fileManager.set("TestData".data(using: .utf8)!, forKey: "TestKey")
 
         XCTAssertEqual(dependency.urlsCalledCount, 1)
         XCTAssertEqual(dependency.urlsCalledParams?.directory, .cachesDirectory)
@@ -48,11 +48,11 @@ final class DiskCacheManagerTests: XCTestCase {
         XCTAssertEqual(dependency.createFileCalledCount, 0)
     }
 
-    func test_setObject() async throws {
+    func test_setObject() throws {
         let dependency = TestFileManager()
         let fileManager = DiskCacheManager(fileMananger: dependency)
 
-        _ = try await fileManager.set("TestData".data(using: .utf8)!, forKey: "TestKey")
+        try fileManager.set("TestData".data(using: .utf8)!, forKey: "TestKey")
 
         XCTAssertEqual(dependency.urlsCalledCount, 1)
         XCTAssertEqual(dependency.urlsCalledParams?.directory, .cachesDirectory)
@@ -65,20 +65,20 @@ final class DiskCacheManagerTests: XCTestCase {
         XCTAssertNil(dependency.createFileCalledParam?.attr)
     }
 
-    func test_clearCache() async throws {
+    func test_clearCache() throws {
         let dependency = TestFileManager()
         let fileManager = DiskCacheManager(fileMananger: dependency)
 
-        _ = try await fileManager.clearCache()
+        try fileManager.clearCache()
 
         XCTAssertEqual(dependency.removeItemCalledCount, 1)
         XCTAssertEqual(dependency.removeItemCalledParam?.absoluteString, "file:///Users/tester/Caches/ImageCache")
     }
 
-    func test_clearCache_whenCacheDirectoryDoesNotExist() async throws {
+    func test_clearCache_whenCacheDirectoryDoesNotExist() throws {
         let dependency = TestFileManager(urls: [])
         let fileManager = DiskCacheManager(fileMananger: dependency)
-        _ = try await fileManager.clearCache()
+        try fileManager.clearCache()
 
         XCTAssertEqual(dependency.removeItemCalledCount, 0)
     }

@@ -8,7 +8,7 @@
 import AsyncDataLoader
 import Foundation
 
-final class TestServerSession: ServerSessionProtocol {
+final class TestServerSession: ServerSessionProtocol, @unchecked Sendable {
     private(set) var dataCallCount = 0
     private(set) var downloadCallCount = 0
     private(set) var url: URL?

@@ -8,7 +8,7 @@
 import AsyncDataLoader
 import Foundation
 
-final class TestDownloadManager: DownloadManagerProtocol {
+final class TestDownloadManager: DownloadManagerProtocol, @unchecked Sendable {
     private(set) var downloadCallCount = 0
     private(set) var url: URL?
     var dataStatus: [DataStatus] = [.inProgress(0.25), .inProgress(0.75)]

@@ -27,9 +27,9 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
 
     public func data(from urlString: String) async throws -> Data {
         guard let url = URL(string: urlString) else { throw DataLoaderError.invalidURL }
-        if let data = await inMemoryCacheMananger.object(forKey: urlString) { return data }
-        if let data = await diskCacheManager.object(forKey: urlString) {
-            try await inMemoryCacheMananger.set(data, forKey: urlString)
+        if let data = inMemoryCacheMananger.object(forKey: urlString) { return data }
+        if let data = diskCacheManager.object(forKey: urlString) {
+            try inMemoryCacheMananger.set(data, forKey: urlString)
             return data
         }
         let (data, response) = try await serverSession.data(from: url)
@@ -41,11 +41,11 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
 
     public func download(from urlString: String) async throws -> AsyncThrowingStream<DataStatus, Error> {
         guard let url = URL(string: urlString) else { throw DataLoaderError.invalidURL }
-        if let data = await inMemoryCacheMananger.object(forKey: urlString) {
+        if let data = inMemoryCacheMananger.object(forKey: urlString) {
             return dataStatusStream(from: data)
         }
-        if let data = await diskCacheManager.object(forKey: urlString) {
-            try await inMemoryCacheMananger.set(data, forKey: urlString)
+        if let data = diskCacheManager.object(forKey: urlString) {
+            try inMemoryCacheMananger.set(data, forKey: urlString)
             return dataStatusStream(from: data)
         }
         return AsyncThrowingStream<DataStatus, Error> { continuation in
@@ -62,7 +62,7 @@ public struct AsyncDataLoader: AsyncDataLoaderProtocol {
     }
 
     public func clearCache() async throws {
-        _ = try await (
+        _ = try (
             inMemoryCacheMananger.clearCache(),
             diskCacheManager.clearCache()
         )
@@ -80,7 +80,7 @@ extension AsyncDataLoader {
     }
 
     private func cache(_ data: Data, forKey: String) async throws {
-        _ = try await (
+        _ = try (
             inMemoryCacheMananger.set(data, forKey: forKey),
             diskCacheManager.set(data, forKey: forKey)
         )

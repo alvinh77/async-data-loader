@@ -8,7 +8,7 @@
 import AsyncDataLoader
 import Foundation
 
-final class TestCacheMananger: CacheManagerProtocol {
+final class TestCacheMananger: CacheManagerProtocol, @unchecked Sendable {
     private(set) var objectCallCount = 0
     private(set) var setCallCount = 0
     private(set) var clearCacheCallCount = 0

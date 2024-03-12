@@ -7,7 +7,7 @@
 
 import Foundation
 
-public actor InMemoryCacheManager: CacheManagerProtocol {
+public struct InMemoryCacheManager: CacheManagerProtocol {
 
     private let cache: NSCache<NSString, WrappedData>
 

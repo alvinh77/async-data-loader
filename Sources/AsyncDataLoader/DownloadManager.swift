@@ -7,10 +7,8 @@
 
 import Foundation
 
-public final class DownloadManager: DownloadManagerProtocol {
+public struct DownloadManager: DownloadManagerProtocol {
     private let downloadSessionFactory: DownloadSessionFactoryProtocol
-    // notaTODO: Replace this with a hash storage to make it more unit testable.
-    private var downloadSessions: [URL: DownloadSessionProtocol] = [:]
 
     public init(downloadSessionFactory: DownloadSessionFactoryProtocol) {
         self.downloadSessionFactory = downloadSessionFactory
@@ -18,7 +16,6 @@ public final class DownloadManager: DownloadManagerProtocol {
 
     public func download(from url: URL) -> AsyncThrowingStream<DataStatus, Error> {
         let downloadSession = downloadSessionFactory.makeSession(url: url)
-        downloadSessions[url] = downloadSession
         return downloadSession.downloadStream
     }
 }

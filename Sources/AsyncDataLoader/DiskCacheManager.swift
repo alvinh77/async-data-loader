@@ -7,7 +7,7 @@
 
 import Foundation
 
-public actor DiskCacheManager: CacheManagerProtocol {
+public struct DiskCacheManager: CacheManagerProtocol {
 
     private let fileMananger: FileManagerProtocol
 

@@ -8,7 +8,7 @@
 import AsyncDataLoader
 import Foundation
 
-final class TestDownloadSessionFactory: DownloadSessionFactoryProtocol {
+final class TestDownloadSessionFactory: DownloadSessionFactoryProtocol, @unchecked Sendable {
     private(set) var makeSessionCalls: [URL] = []
     let testDownloadSession: TestDownloadSession
 

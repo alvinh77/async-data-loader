@@ -8,7 +8,7 @@
 import Foundation
 
 /// A protocol representing a session for interacting with a server.
-public protocol ServerSessionProtocol {
+public protocol ServerSessionProtocol: Sendable {
     /// Asynchronously retrieves the contents of the specified URL.
     ///
     /// - Parameters:

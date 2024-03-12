@@ -11,7 +11,7 @@ import SwiftUI
 struct PhotosListView: View {
     let asyncDataLoader: AsyncDataLoaderProtocol
 
-    let data = (1...300).map {
+    let data = (0...299).map {
         "https://picsum.photos/id/\($0)/200/200"
     }
 

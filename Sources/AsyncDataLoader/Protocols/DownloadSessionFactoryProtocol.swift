@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol DownloadSessionFactoryProtocol {
+public protocol DownloadSessionFactoryProtocol: Sendable {
     func makeSession(url: URL) -> DownloadSessionProtocol
 }

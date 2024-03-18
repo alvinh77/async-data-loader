@@ -25,7 +25,9 @@ let package = Package(
             name: "AsyncDataLoader",
             dependencies: [],
             // plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
-            swiftSettings: []
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency")
+            ]
         ),
         .testTarget(
             name: "AsyncDataLoaderTests",

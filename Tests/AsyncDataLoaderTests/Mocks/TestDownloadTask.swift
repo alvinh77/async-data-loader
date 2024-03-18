@@ -8,7 +8,7 @@
 import AsyncDataLoader
 import Foundation
 
-final class TestDownloadTask: DownloadTask {
+final class TestDownloadTask: DownloadTask, @unchecked Sendable {
     private(set) var resumeCallCount = 0
     private(set) var cancelCallCount = 0
     var delegate: URLSessionTaskDelegate?

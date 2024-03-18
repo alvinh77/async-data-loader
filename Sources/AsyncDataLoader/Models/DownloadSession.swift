@@ -19,11 +19,11 @@ public final class DownloadSession: NSObject, DownloadSessionProtocol {
     }()
 
     private(set) public lazy var downloadStream: AsyncThrowingStream<DataStatus, Error> = {
-        AsyncThrowingStream<DataStatus, Error> { [weak self] continuation in
+        AsyncThrowingStream<DataStatus, Error> { [task, weak self] continuation in
             self?.continuation = continuation
-            self?.task.resume()
-            continuation.onTermination = { @Sendable [weak self] _ in
-                self?.task.cancel()
+            task.resume()
+            continuation.onTermination = { [task] _ in
+                task.cancel()
             }
         }
     }()

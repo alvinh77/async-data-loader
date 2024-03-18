@@ -26,7 +26,7 @@ public protocol ServerSessionProtocol: Sendable {
 }
 
 /// A protocol representing a download task.
-public protocol DownloadTask {
+public protocol DownloadTask: Sendable {
     /// The delegate to handle various task events.
     var delegate: URLSessionTaskDelegate? { get set }
 

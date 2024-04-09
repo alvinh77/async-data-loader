@@ -8,34 +8,27 @@
 import Foundation
 
 public final class DownloadSession: NSObject, DownloadSessionProtocol {
-    private let url: URL
     private let serverSession: ServerSessionProtocol
     private let dataProvider: (URL) -> Data?
-    private var continuation: AsyncThrowingStream<DataStatus, Error>.Continuation?
-    private lazy var task: DownloadTask = {
-        var task = serverSession.download(from: self.url)
-        task.delegate = self
-        return task
-    }()
-
-    private(set) public lazy var downloadStream: AsyncThrowingStream<DataStatus, Error> = {
-        AsyncThrowingStream<DataStatus, Error> { [task, weak self] continuation in
-            self?.continuation = continuation
-            task.resume()
-            continuation.onTermination = { [task] _ in
-                task.cancel()
-            }
-        }
-    }()
+    private let continuation: AsyncThrowingStream<DataStatus, Error>.Continuation
+    private let task: DownloadTask
+    public let downloadStream: AsyncThrowingStream<DataStatus, Error>
 
     public init(
         url: URL,
         serverSession: ServerSessionProtocol,
         dataProvider: @escaping (URL) -> Data? = { try? Data(contentsOf: $0) }
     ) {
-        self.url = url
         self.serverSession = serverSession
         self.dataProvider = dataProvider
+        let (stream, continuation) = AsyncThrowingStream<DataStatus, Error>.makeStream()
+        self.downloadStream = stream
+        self.continuation = continuation
+        var task = serverSession.download(from: url)
+        self.task = task
+        super.init()
+        task.delegate = self
+        task.resume()
     }
 }
 
@@ -49,7 +42,7 @@ extension DownloadSession: URLSessionDownloadDelegate {
         totalBytesWritten: Int64,
         totalBytesExpectedToWrite: Int64
     ) {
-        continuation?.yield(.inProgress(Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)))
+        continuation.yield(.inProgress(Double(totalBytesWritten) / Double(totalBytesExpectedToWrite)))
     }
 
     public func urlSession(
@@ -58,12 +51,10 @@ extension DownloadSession: URLSessionDownloadDelegate {
         didFinishDownloadingTo location: URL
     ) {
         guard let data = dataProvider(location) else {
-            continuation?.finish(throwing: DataLoaderError.dataNotFound)
-            continuation = nil
+            continuation.finish(throwing: DataLoaderError.dataNotFound)
             return
         }
-        continuation?.yield(.finished(data))
-        continuation?.finish()
-        continuation = nil
+        continuation.yield(.finished(data))
+        continuation.finish()
     }
 }
